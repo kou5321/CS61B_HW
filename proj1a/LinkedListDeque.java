@@ -10,7 +10,7 @@ public class LinkedListDeque<T> {
         private T item;
         private Node next;
 
-        public Node(LinkListDeque<T>.Node prev, T item, LinkListDeque<T>.Node next) {
+        public Node(LinkedListDeque<T>.Node prev, T item, LinkedListDeque<T>.Node next) {
             this.prev = prev;
             this.item = item;
             this.next = next;
@@ -20,28 +20,28 @@ public class LinkedListDeque<T> {
     private Node sentinel; // null
     private int size;
 
-    public LinkdListDeque() {
+    public LinkedListDeque() {
         sentinel = new Node(null, (T) new Object(), null);
         sentinel.prev = sentinel;
-        sentinel.next = end;
+        sentinel.next = sentinel;
         size = 0;
     }
 
     // Creates a deep copy
-    public LinkedListDeque(LinkedListDeque other) {
-        sentinel = new Node(value:null);
-        sentinel.prev = sentinel;
-        sentinel.next = sentinel;
-        size = 0;
+    // public LinkedListDeque(LinkedListDeque other) {
+    // sentinel = new Node(value:null);
+    // sentinel.prev = sentinel;
+    // sentinel.next = sentinel;
+    // size = 0;
 
-        for (int i = 0; i < other.size; i += 1) {
-            addLast((T) other.get(i));
-        }
-    }
+    // for (int i = 0; i < other.size; i += 1) {
+    // addLast((T) other.get(i));
+    // }
+    // }
 
     /** Adds an item of type T to the front of the deque. */
     public void addFirst(T item) {
-        Node newnode = new Node(sentinel, item, sentinel.next);
+        Node newNode = new Node(sentinel, item, sentinel.next);
         sentinel.next.prev = newNode;
         sentinel.next = newNode;
         size++;
@@ -49,7 +49,7 @@ public class LinkedListDeque<T> {
 
     /** Adds an item of type T to the end of the deque. */
     public void addLast(T item) {
-        Node newNode = new Node(sentinel, item, sentinel.next);
+        Node newNode = new Node(sentinel.prev, item, sentinel);
         sentinel.prev.next = newNode;
         sentinel.prev = newNode;
         size++;
@@ -65,14 +65,17 @@ public class LinkedListDeque<T> {
         return size;
     }
 
-    /** Prints the items in the deque from first to last, separated by a space. Once all the items have been printed, print out a new line */
+    /**
+     * Prints the items in the deque from first to last, separated by a space. Once
+     * all the items have been printed, print out a new line
+     */
     public void printDeque() {
-        for (Node i = sentinel.next; i != sentinel; i++) {
+        for (Node i = sentinel.next; i != sentinel; i = i.next) {
             if (i.next == sentinel) {
-                system.out.println(i.item);
+                System.out.println(i.item);
                 break;
             } else {
-                system.out.print(i.item + " ")
+                System.out.print(i.item + " ");
             }
         }
     }
@@ -93,7 +96,7 @@ public class LinkedListDeque<T> {
         }
     }
 
-     /**
+    /**
      * Removes and returns the item at the back of the deque. If no such item
      * exists, returns null.
      */
@@ -113,7 +116,7 @@ public class LinkedListDeque<T> {
      * Gets the item at the given index, where 0 is the front, 1 is the next item,
      * and so forth. If no such item exists, returns null. Must not alter the deque!
      */
-    public T get (int index) {
+    public T get(int index) {
         if (size < index) {
             return null;
         }
@@ -125,18 +128,22 @@ public class LinkedListDeque<T> {
         return p.item;
     }
 
-     /** Same as get, but uses recursion. */
-     public T getRecursive(int index) {
+    /** Same as get, but uses recursion. */
+    public T getRecursive(int index) {
         if (size < index) {
             return null;
         }
         return getRecursive(sentinel.next, index);
     }
-    
+
     public T getRecursive(LinkedListDeque<T>.Node node, int i) {
-        if (i==0) {
+        if (i == 0) {
             return node.item;
         }
-        return getRecursive(node.next, i-1)
+        return getRecursive(node.next, i - 1);
+    }
+    
+    public static void main(String[] args) {
+        
     }
 }
