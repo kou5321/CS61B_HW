@@ -1,0 +1,129 @@
+/**
+ * Deque (usually pronounced like “deck”) is an irregular acronym of
+ * double-ended queue. Double-ended queues are sequence containers with dynamic
+ * sizes that can be expanded or contracted on both ends (either its front or
+ * its back).
+ */
+public class LinkedListDeque<T> {
+    private class Node {
+        private Node prev;
+        private T item;
+        private Node next;
+
+        public Node(LinkListDeque<T>.Node prev, T item, LinkListDeque<T>.Node next) {
+            this.prev = prev;
+            this.item = item;
+            this.next = next;
+        }
+    }
+
+    private Node sentinel; // null
+    private int size;
+
+    public LinkdListDeque() {
+        sentinel = new Node(null, (T) new Object(), null);
+        sentinel.prev = sentinel;
+        sentinel.next = end;
+        size = 0;
+    }
+
+    // Creates a deep copy
+    public LinkedListDeque(LinkedListDeque other) {
+        sentinel = new Node(value:null);
+        sentinel.prev = sentinel;
+        sentinel.next = sentinel;
+        size = 0;
+
+        for (int i = 0; i < other.size; i += 1) {
+            addLast((T) other.get(i));
+        }
+    }
+
+    /** Adds an item of type T to the front of the deque. */
+    public void addFirst(T item) {
+        Node newnode = new Node(sentinel, item, sentinel.next);
+        sentinel.next.prev = newNode;
+        sentinel.next = newNode;
+        size++;
+    }
+
+    /** Adds an item of type T to the end of the deque. */
+    public void addLast(T item) {
+        Node newNode = new Node(sentinel, item, sentinel.next);
+        sentinel.prev.next = newNode;
+        sentinel.prev = newNode;
+        size++;
+    }
+
+    /** Returns true if deque is empty, false otherwise. */
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    /** Returns the number of items in the deque. */
+    public int size() {
+        return size;
+    }
+
+    /** Prints the items in the deque from first to last, separated by a space. Once all the items have been printed, print out a new line */
+    public void printDeque() {
+        for (Node i = sentinel.next; i != sentinel; i++) {
+            if (i.next == sentinel) {
+                system.out.println(i.item);
+                break;
+            } else {
+                system.out.print(i.item + " ")
+            }
+        }
+    }
+
+    /**
+     * Removes and returns the item at the front of the deque. If no such item
+     * exists, returns null.
+     */
+    public T removeFirst() {
+        if (isEmpty()) {
+            return null;
+        } else {
+            T res = sentinel.next.item;
+            sentinel.next = sentinel.next.next;
+            sentinel.next.prev = sentinel;
+            size--;
+            return res;
+        }
+    }
+
+     /**
+     * Removes and returns the item at the back of the deque. If no such item
+     * exists, returns null.
+     */
+    public T removeLast() {
+        if (isEmpty()) {
+            return null;
+        } else {
+            T res = sentinel.prev.item;
+            sentinel.prev = sentinel.prev.prev;
+            sentinel.prev.next = sentinel;
+            size--;
+            return res;
+        }
+    }
+
+    /**
+     * Gets the item at the given index, where 0 is the front, 1 is the next item,
+     * and so forth. If no such item exists, returns null. Must not alter the deque!
+     */
+    public T get (int index) {
+        if (size < index) {
+            return null;
+        }
+        Node p = sentinel.next;
+        while (index > 0) {
+            p = p.next;
+            index--;
+        }
+        return p.item;
+    }
+
+    
+}
