@@ -125,5 +125,18 @@ public class LinkedListDeque<T> {
         return p.item;
     }
 
+     /** Same as get, but uses recursion. */
+     public T getRecursive(int index) {
+        if (size < index) {
+            return null;
+        }
+        return getRecursive(sentinel.next, index);
+    }
     
+    public T getRecursive(LinkedListDeque<T>.Node node, int i) {
+        if (i==0) {
+            return node.item;
+        }
+        return getRecursive(node.next, i-1)
+    }
 }
