@@ -137,14 +137,10 @@ public class LinkedListDeque<T> {
         return getRecursive(sentinel.next, index);
     }
 
-    public T getRecursive(LinkedListDeque<T>.Node node, int i) {
+    private T getRecursive(LinkedListDeque<T>.Node node, int i) {
         if (i == 0) {
             return node.item;
         }
         return getRecursive(node.next, i - 1);
-    }
-    
-    public static void main(String[] args) {
-        
     }
 }

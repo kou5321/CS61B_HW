@@ -142,8 +142,4 @@ public class ArrayDeque<T> {
         items = newArray;
         capacity = newSize;
     }
-
-    public static void main(String[] args) {
-
-    }
 }
